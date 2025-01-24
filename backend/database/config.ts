@@ -1,4 +1,4 @@
-import dotenv from "dotenv";
+import dotenv from "dotenv"
 
 const envFile =
   process.env.NODE_ENV === "test" ? ".env.local" : ".env.development";
