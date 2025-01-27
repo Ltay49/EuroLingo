@@ -410,7 +410,7 @@ class CaveScene extends Phaser.Scene {
   }
 
   fetchAndDisplayWords() {
-    fetch(`https://eurolingo.onrender.com/api/${this.selectedLanguage}`, {
+    fetch(`https://eurolingo-21sw.onrender.com/api/${this.selectedLanguage}`, {
       method: "GET",
       headers: { "Content-Type": "application/json" },
     })

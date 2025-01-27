@@ -411,7 +411,7 @@ class HouseScene4 extends Phaser.Scene {
     this.journalImage = this.add.image(500, 310, "journal").setDepth(3);
     this.journalImage.displayWidth = 1200;
     this.journalImage.displayHeight = 1050;
-    fetch("https://eurolingo.onrender.com/api/ukrainian", {
+    fetch("https://eurolingo-21sw.onrender.com/api/ukrainian", {
       method: "GET",
       headers: { "Content-Type": "application/json" },
     })
@@ -649,9 +649,11 @@ class HouseScene4 extends Phaser.Scene {
   }
 
   roundComplete() {
+    const username = this.game.registry.get("username");
     if (this.isComplete) {
       return;
     }
+    this.roundCount++;
 
     this.isComplete = true;
     const message = "Well done!\nSee you soon!";
@@ -674,10 +676,27 @@ class HouseScene4 extends Phaser.Scene {
       }
     });
 
+    if (this.roundCount === 5) {
+      fetch(`https://eurolingo-21sw.onrender.com/api/users/${username}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          language: "french",
+        }),
+      }).then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+      });
+    }
+
     this.matchedPairs = [];
     this.leftWords = [];
     this.rightWords = [];
-    this.roundCount++;
+
     this.isComplete = false;
   }
 
